@@ -68,17 +68,20 @@ public class ActionMachineController : MonoBehaviour
         modelRoot.rotation = Quaternion.Lerp(modelRoot.rotation, _modelRotation, Time.deltaTime * rotationSpeed);
     }
 
+#if USE_FIXPOINT
+    public void LogicUpdate(FPPhysics.Fix64 deltaTime)
+#else
     public void LogicUpdate(float deltaTime)
+#endif
     {
         //更新状态
         actionMachine.LogicUpdate(deltaTime);
-
         //更新动画
         UpdateLogicAnimation(deltaTime);
 
         CheckGround();
     }
-
+            
     private void CheckGround()
     {
         float length = 0.02f;

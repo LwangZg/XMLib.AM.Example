@@ -32,6 +32,19 @@ public class Condition : IActionHandler
     {
     }
 
+#if USE_FIXPOINT
+    public void Update(ActionNode node, FPPhysics.Fix64 deltaTime)
+    {
+        ConditionConfig config = (ConditionConfig)node.config;
+        IActionMachine machine = node.actionMachine;
+        ActionMachineController controller = (ActionMachineController)node.actionMachine.controller;
+
+        if (Checker(config.checker, node))
+        {
+            machine.ChangeState(config.stateName, config.priority);
+        }
+    }
+#else
     public void Update(ActionNode node, float deltaTime)
     {
         ConditionConfig config = (ConditionConfig)node.config;
@@ -43,6 +56,8 @@ public class Condition : IActionHandler
             machine.ChangeState(config.stateName, config.priority);
         }
     }
+#endif
+    
 
     public static bool Checker(List<Conditions.IItem> checkers, ActionNode node)
     {

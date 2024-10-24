@@ -100,6 +100,15 @@ namespace XMLib.AM
         {
             return cacheMConfig ?? (cacheMConfig = ActionMachineHelper.GetMachineConfig(configName));
         }
+        /* 等同于
+        public MachineConfig GetMachineConfig()  
+        {  
+            if (cacheMConfig == null)  
+            {  
+                cacheMConfig = ActionMachineHelper.GetMachineConfig(configName);  
+            }  
+            return cacheMConfig;  
+        }*/
 
         public StateConfig GetStateConfig()
         {
@@ -347,7 +356,6 @@ namespace XMLib.AM
         {
             //全局帧，不受顿帧影响
             globalFrameIndex++;
-
             //更新全局动作-不被顿帧影响
             UpdateActions(globalActionNodes, deltaTime, globalFrameIndex);
         }

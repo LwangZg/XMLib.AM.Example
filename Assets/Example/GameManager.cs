@@ -39,9 +39,15 @@ public class GameManager : MonoBehaviour
 
     [SerializeField]
     protected List<TextAsset> configs;
-
+    
+#if USE_FIXPOINT
+    protected FPPhysics.Fix64 logicTimer = 0;
+    protected FPPhysics.Fix64 logicDeltaTime = (FPPhysics.Fix64) (1 / 30f);
+#else
     protected float logicTimer = 0f;
     protected const float logicDeltaTime = 1 / 30f;
+#endif
+   
 
     #region Input
 
@@ -104,7 +110,11 @@ public class GameManager : MonoBehaviour
 
     private void LogicUpdate()
     {
+#if USE_FIXPOINT
+        logicTimer += (FPPhysics.Fix64)Time.deltaTime;
+#else
         logicTimer += Time.deltaTime;
+#endif
         if (logicTimer >= logicDeltaTime)
         {
             logicTimer -= logicDeltaTime;
@@ -113,7 +123,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void RunLogicUpdate(float logicDeltaTime)
+#if USE_FIXPOINT
+    private void RunLogicUpdate(FPPhysics.Fix64 logicDeltaTime)
+#else
+     private void RunLogicUpdate(float logicDeltaTime)
+#endif
     {
         foreach (var item in controllers)
         {

@@ -20,7 +20,11 @@ public class Move : IActionHandler
     {
     }
 
+#if USE_FIXPOINT
+    public void Update(ActionNode node, FPPhysics.Fix64 deltaTime)
+#else
     public void Update(ActionNode node, float deltaTime)
+#endif
     {
         MoveConfig config = (MoveConfig)node.config;
         IActionMachine machine = node.actionMachine;

@@ -86,6 +86,9 @@ namespace XMLib.AM
             {
                 return new CircleItem()
                 {
+                    
+                    
+                    
                     offset = this.offset,
                     radius = this.radius
                 };

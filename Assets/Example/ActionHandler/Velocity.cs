@@ -25,7 +25,11 @@ public class Velocity : IActionHandler
     {
     }
 
+#if USE_FIXPOINT
+    public void Update(ActionNode node, FPPhysics.Fix64 deltaTime)
+#else
     public void Update(ActionNode node, float deltaTime)
+#endif
     {
     }
 }
